@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+// Health check
 app.get('/health', (req, res) => {
   res.json({
     status: 'OK',
@@ -32,15 +32,14 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Auth routes
-app.use('/api/auth', authRoutes);
-
-// Test route
-app.get('/api/test', (req, res) => {
+// Home route
+app.get('/', (req, res) => {
   res.json({
-    message: 'API is working!',
-    service: 'Pi NFT Bay Backend',
+    message: 'Pi NFT Bay Backend API',
+    service: 'Pi NFT Marketplace Backend',
     endpoints: [
+      'GET /health - Health check',
+      'GET /wallet-test - Pi wallet test page',
       'POST /api/auth/challenge',
       'POST /api/auth/verify', 
       'GET /api/auth/me'
@@ -48,18 +47,28 @@ app.get('/api/test', (req, res) => {
   });
 });
 
-// 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({
-    error: 'Route not found',
-    path: req.originalUrl
-  });
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Pi NFT Bay Backend running on http://localhost:${PORT}`);
-  console.log(`📡 Health: http://localhost:${PORT}/health`);
-  console.log(`🔑 Auth: http://localhost:${PORT}/api/auth/challenge`);
-  console.log(`🌐 CORS: pinftbay.art enabled`);
-});
+// Pi wallet test page (COMPLETE VERSION)
+app.get('/wallet-test', (req, res) => {
+  res.send(`<!DOCTYPE html>
+<html>
+<head>
+    <title>Pi NFT Bay - Wallet Test</title>
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <style>
+        body { font-family: Arial; padding: 20px; text-align: center; background: #f0f9ff; }
+        h1 { color: #f97316; }
+        button { background: #f97316; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        #status { margin: 20px; padding: 10px; border-radius: 5px; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+        .info { background: #dbeafe; color: #1e40af; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Pi NFT Bay</h1>
+    <h2>Pi Wallet Test</h2>
+    <button onclick="connectWallet()">Connect Pi Wallet</button>
+    <div id="status"></div>
+    
+    <script>
+        window.add
