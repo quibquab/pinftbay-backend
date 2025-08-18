@@ -228,3 +228,44 @@ router.get('/health', (req, res) => {
 });
 
 module.exports = router;
+// Pi Network domain validation endpoint
+router.get('/validate-domain', (req, res) => {
+  try {
+    const validationKey = process.env.PI_VALIDATION_KEY;
+    
+    if (!validationKey) {
+      return res.status(404).json({
+        error: 'Validation key not found'
+      });
+    }
+
+    res.json({
+      validation_key: validationKey,
+      domain: 'pinftbay.art',
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('Validation endpoint error:', error);
+    res.status(500).json({
+      error: 'Validation failed'
+    });
+  }
+});
+
+// Alternative: Return just the validation key as plain text
+router.get('/validation-key', (req, res) => {
+  try {
+    const validationKey = process.env.PI_VALIDATION_KEY;
+    
+    if (!validationKey) {
+      return res.status(404).send('Validation key not found');
+    }
+
+    res.type('text/plain').send(validationKey);
+
+  } catch (error) {
+    console.error('Validation key endpoint error:', error);
+    res.status(500).send('Validation failed');
+  }
+});
