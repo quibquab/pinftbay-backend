@@ -1,0 +1,18 @@
+{
+  "name": "pinftbay-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Pi NFT Bay marketplace",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "express-rate-limit": "^6.8.1",
+    "dotenv": "^16.3.1",
+    "axios": "^1.4.0"
+  }
+}
